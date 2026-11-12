@@ -496,9 +496,13 @@ updateView();
 renderList();
 const initialLot = new URLSearchParams(location.search).get('lot');
 if (initialLot) selectLot(initialLot, false);
+// 构建时注入的 Mapbox Token（tools/export-static.mjs 会把下面这行替换成真实 Token）
+// 优先级：localStorage（访客自己填的） > 服务端 /api/config 或 config.json > 这里的内置值
+const EMBEDDED_MAPBOX_TOKEN = "pk.eyJ1Ijoid2FuZ2h1aTg2OTEiLCJhIjoiY213ZGMwem9hMDJ0MTJ6c2Jxc3BzZDl2cyJ9.mfJdE0yVIfft447EF9PYtA";
+let runtimeConfig = {};
 try {
   const response = await fetch('./config.json', { cache: 'no-store' });
-  const config = await response.json();
-  const token = safeRead('nexus-mapbox-token', '') || config.mapboxToken;
-  if (token) initMapbox(token);
-} catch { /* 静态托管无 /api/config 时静默跳过，直接使用无需 Token 的示意地图 */ }
+  runtimeConfig = await response.json();
+} catch { /* 无服务端配置接口（静态托管 / file:// 打开）时忽略，继续走内置 Token */ }
+const token = safeRead('nexus-mapbox-token', '') || runtimeConfig.mapboxToken || EMBEDDED_MAPBOX_TOKEN;
+if (token) initMapbox(token);
