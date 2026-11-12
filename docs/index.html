@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080e19">
+  <title>NEXUS · 未来理想生活地图</title>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.33.0/mapbox-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="https://api.mapbox.com/mapbox-gl-js/v3.33.0/mapbox-gl.js"></script>
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="./" aria-label="Nexus 首页"><span class="brand-mark">N</span><span>NEXUS<small>SPACES FOR TOMORROW</small></span></a>
+    <nav aria-label="主导航"><button class="nav-active" data-view="homes">探索社区 <span>01</span></button><button data-view="amenities">生活配套 <span>02</span></button><button id="about">项目概览 <span>03</span></button></nav>
+    <div class="header-right"><span class="live"><i></i> COMMUNITY EXPLORER</span><button class="contact" id="contact">预约参观 <span>↗</span></button></div>
+  </header>
+  <main>
+    <aside class="sidebar">
+      <div class="intro"><div class="eyebrow">THE NEXT CHAPTER OF LIVING</div><h1>University Place<span>理想生活，自此展开。</span></h1><p><span class="pin">⌖</span> Sandpoint, Idaho <span class="sep">/</span> 爱达荷州 · 桑德波因特</p></div>
+      <div class="metrics"><div><b>48<small>席</small></b><span>规划住宅地块</span></div><div><b>12<small>min</small></b><span>抵达城市中心</span></div><div><b>32<small>%</small></b><span>社区绿地占比</span></div></div>
+      <div class="panel-tabs"><button class="active" data-view="homes">⌂ &nbsp; 探索房源</button><button data-view="amenities">⌘ &nbsp; 周边配套</button><button data-view="saved">♡ &nbsp; 我的收藏 <span id="saved-count">0</span></button></div>
+      <div class="search-wrap"><span>⌕</span><input id="search" type="search" placeholder="搜索地块编号、户型…" aria-label="搜索房源"><kbd>/</kbd></div>
+      <div class="filter-row"><button class="filter active" data-status="all">全部</button><button class="filter" data-status="available"><i class="dot available"></i>在售</button><button class="filter" data-status="reserved"><i class="dot reserved"></i>已预订</button><button class="filter" data-status="sold"><i class="dot sold"></i>已售</button><button id="sort" class="sort" title="切换价格排序">⇅</button></div>
+      <div class="results-heading"><span id="result-title">精选房源 <b id="result-count">0</b></span><span>点击房源，在地图中探索 ↗</span></div>
+      <div id="listing" class="listing"></div>
+      <div class="sidebar-footer"><span><i class="dot available"></i> 发现你的下一处理想居所</span><span>↗</span></div>
+    </aside>
+    <section class="map-stage" aria-label="社区交互地图">
+      <div id="map"></div><div id="illustrated-map" class="illustrated-map"></div>
+      <div class="map-top"><div class="breadcrumb">社区探索 <span>/</span> <strong>University Place</strong><span class="demo-badge" id="mode-badge">DEMO MAP</span></div><div class="map-style"><button class="active" data-style="dark">深色地图</button><button data-style="satellite">卫星影像</button></div></div>
+      <div class="project-label"><span class="eyebrow">A PLACE TO BELONG</span><h2>University<br>Place<span>↗</span></h2><p>48 HOMESITES · ENDLESS POSSIBILITIES</p></div>
+      <div class="map-controls"><button id="compass" title="复位朝向"><span class="compass">N<br>▲</span></button><div><button id="zoom-in" title="放大">＋</button><button id="zoom-out" title="缩小">−</button></div><button id="reset" title="回到社区">⌖</button><button id="tilt" title="切换立体视角">3D</button><button id="settings" title="配置 Mapbox Token">⚙</button></div>
+      <div class="view-settings" aria-label="建筑视图设置"><div class="view-settings-title">建筑视图 <span id="view-mode">示意立体</span></div><label for="pitch-range">视角倾斜 <output id="pitch-value">55°</output></label><input id="pitch-range" type="range" min="0" max="75" step="1" value="55"><label for="height-range">自绘矢量高度倍数 <output id="height-value">2.0×</output></label><input id="height-range" type="range" min="1" max="6" step="0.1" value="2"><small>右键上下拖动倾斜 · 左右拖动旋转<br>仅调整自绘地块与房屋 · 不改变底图建筑</small></div>
+      <article id="detail" class="detail" hidden></article>
+      <div class="map-bottom"><div class="legend"><span class="legend-title">房源状态</span><span><i class="dot available"></i>在售</span><span><i class="dot reserved"></i>已预订</span><span><i class="dot sold"></i>已售</span><span><i class="dot model"></i>样板间</span></div><div class="scale"><span>100 m</span><i></i></div></div>
+      <div class="map-credit"><span id="map-note">示意总平图 · 非真实地籍数据</span><span> NEXUS © 2026 <span class="credit-divider">|</span> MAPBOX READY</span></div>
+      <div class="map-coordinates">48°17′ N &nbsp; 116°33′ W</div>
+    </section>
+  </main>
+  <dialog id="modal"><form method="dialog"><button class="modal-close" aria-label="关闭">×</button></form><div id="modal-content"></div></dialog>
+  <div id="toast" role="status"></div>
+</body>
+</html>
